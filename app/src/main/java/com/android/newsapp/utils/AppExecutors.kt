@@ -5,6 +5,8 @@ import android.os.Looper
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+//kelas AppExecutors yang disediakan untuk mengakses database dari background.
+
 class AppExecutors {
     val diskIO: Executor = Executors.newSingleThreadExecutor()
     val networkIO: Executor = Executors.newFixedThreadPool(3)

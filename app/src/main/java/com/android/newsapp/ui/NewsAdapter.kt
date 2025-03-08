@@ -16,7 +16,7 @@ import com.android.newsapp.utils.DateFormatter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class NewsAdapter : ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
+class NewsAdapter (private val onBookmarkClick: (NewsEntity) -> Unit): ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: NewsEntity) {
             binding.tvItemTitle.text = news.title
@@ -43,6 +43,20 @@ class NewsAdapter : ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val news = getItem(position)
         holder.bind(news)
+
+        val icBookmark = holder.binding.icBookmark
+        if (news.isBookmarked) {
+            icBookmark.setImageDrawable(
+                icBookmark.context.resources.getDrawable(R.drawable.ic_bookmarked_white)
+            )
+        } else {
+            icBookmark.setImageDrawable(
+                icBookmark.context.resources.getDrawable(R.drawable.ic_bookmark_white)
+            )
+        }
+        icBookmark.setOnClickListener {
+            onBookmarkClick(news)
+        }
     }
 
     companion object {
